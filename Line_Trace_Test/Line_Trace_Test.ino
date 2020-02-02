@@ -87,10 +87,40 @@ void loop() {
     {
         Serial.print("else=================================");
         Serial.println(flag);
+        switch (location_info) {
+            // start line
+            case 0:
+
+            // point A
+            case 1:
+                MoveStop(5000);
+                break;
+            //  point B
+            case 2:
+                MoveStop(5000);
+                break;
+            // point C path
+            case 3:
+                Move90L();
+                break;
+            // point C
+            case 4:
+                Move90L();
+                Move90L();
+                break;
+            // point C path again
+            case 5:
+                Move90L();
+                break;
+            // point A again
+            case 6:
+                MoveStop(5000);
+                break;
+            default:
+                MoveStop(5000);
+        }
         if (flag)
         {
-            Move(0, 0);
-            delay(5);
             location_info += 1; 
             flag = false;
         }
@@ -98,7 +128,24 @@ void loop() {
     }
 
 }
+void MoveStop(int time){
+    Serial.println("90 LEFT");
+    Move(0, 0);
+    delay(time);
+}
+void Move90L(){
+    While(True){
+        MoveL()
+        if (analogRead(CT) < DCT){
+            break
+        }
+    }
+    Serial.println("90 LEFT");
+    Move(-MSL, MSR);
+    delay(1300);
+}
 void MoveR(){
+    Serial.println("RIGHT");
     Serial.println("RIGHT");
     Move(MSL, 0);
     delayMicroseconds(10);
