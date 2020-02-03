@@ -27,7 +27,10 @@ void loop() {
       delay(200);
       if (analogRead(R2) > DR2) { //spin left
         Move(-MSL, MSR);
-        delay(1250);
+        delay(500);
+        while(analogRead(CT) > DCT){
+          Move(-MSL,MSR);
+        }
       }
     }
     else { //turn left
