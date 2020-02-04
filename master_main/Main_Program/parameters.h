@@ -13,12 +13,6 @@ const int RF = 12;
 const int RB = 13;
 //↑motors
 
-const int ModeSW_11 = 32;
-const int ModeSW_12 = 34;
-const int ModeSW_21 = 36;
-const int ModeSW_22 = 38;
-//↑mode select switches
-
 const int DR2 = 400;
 const int DR1 = 400;
 const int DCT = 400;
@@ -32,5 +26,13 @@ const int MSL = 100;
 const int MSR = 100;
 //↑motor speed
 
-int mode = 1;
+const int ModeSW[8] {
+  14, 15, 16, 17, 18, 19, 20, 21
+};
+//↑mode select switches(14~21)
+
+int location_info = 0;
 //↑mode selection
+
+bool flag = true;
+int i;
