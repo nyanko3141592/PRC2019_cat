@@ -27,7 +27,7 @@ const int MSR = 100;
 //↑motor speed
 
 const int ModeSW[8] {
-  14, 15, 16, 17, 18, 19, 20, 21
+  52, 50, 48, 46, 44, 42, 40, 38
 };
 //↑mode select switches(14~21)
 

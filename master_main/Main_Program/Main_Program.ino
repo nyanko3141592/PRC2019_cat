@@ -60,10 +60,10 @@ void loop() {
       }
       else {
         if (R1_black || R2_black) {
-          MoveR();
+          MoveRS();
         }
         else if (L1_black || L2_black) {
-          MoveL();
+          MoveLS();
         }
         else {
           MoveS();
@@ -85,20 +85,52 @@ void loop() {
       //  point B
       case 2:
         // すこし前進して一回転
-        MoveS();
+        /*MoveS();
+        delay(1500);
+        while (analogRead(CT) > DCT) {
+          MoveLS();
+        }
         Move90L();
+        while (analogRead(CT) > DCT) {
+          MoveLS();
+        }
+        Move90L();*/
+        //左右に揺れる
+        MoveLS();
+        delay(500);
+        MoveRS();
+        delay(1000);
+        MoveLS();
+        delay(1000);
+        MoveRS();
+        delay(1000);
         Move90L();
         break;
       // point C path
       case 3:
+        while (analogRead(CT) > DCT) {
+          MoveL();
+          delay(500);
+        }
         Move90L();
         break;
       // point C
       case 4:
+        MoveS();
+        delay(500);
+        while (analogRead(CT) > DCT) {
+          MoveL();
+          delay(500);
+        }
         Move90L();
         break;
       // point C path again
       case 5:
+        Move90L();
+        while (analogRead(CT) > DCT) {
+          MoveL();
+          delay(500);
+        }
         Move90L();
         break;
       // point A again

@@ -7,26 +7,34 @@ void MoveStop(int time) {
 }
 void Move90L() {
   while (true) {
-    MoveL();
+    MoveLS();
     if (analogRead(CT) < DCT) {
       break;
     }
+    Serial.println("Line Ditected");
   }
-  Serial.println("90 LEFT");
-  Move(-MSL, MSR);
-  delay(1300);
+}
+void MoveRS() {
+  Serial.println("RIGHT SPIN");
+  Move(MSL, -MSR);
+  delayMicroseconds(10);
 }
 void MoveR() {
   Serial.println("RIGHT");
-  Serial.println("RIGHT");
   Move(MSL, 0);
   delayMicroseconds(10);
-
+  //Move(MSL,-MSR);
+}
+void MoveLS() {
+  Serial.println("LEFT SPIN");
+  Move(-MSL, MSR);
+  delayMicroseconds(10);
 }
 void MoveL() {
   Serial.println("LEFT");
   Move(0, MSR);
   delayMicroseconds(10);
+  //Move(-MSL,MSR);  
 }
 void MoveS() {
   Serial.println("Straight");

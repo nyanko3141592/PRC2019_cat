@@ -2,3 +2,5 @@ cmake-build-debug
 CMakeLists.txt
 *.iml
 *.xml
+.vscode/arduino.json
+.vscode/c_cpp_properties.json
