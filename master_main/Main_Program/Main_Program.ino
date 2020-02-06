@@ -29,21 +29,6 @@ void setup()
     Serial2.write("1");
     Serial.print("=================================================================");
     Serial.println(location_info);
-=======
-void setup() {
-  pinMode(RF, OUTPUT);
-  pinMode(RB, OUTPUT);
-  pinMode(LF, OUTPUT);
-  pinMode(LB, OUTPUT);
-  for (i = 0; i < 8; i++) {
-    pinMode(ModeSW[i], INPUT_PULLUP);
-  }
-  location_info = SWCheck();
-  Serial.begin(9600);//PC (Debug)
-  Serial1.begin(9600);//ESP (Wireless)
-  Serial.print("=================================================================");
-  Serial.println(location_info);
->>>>>>> master
 }
 
 void loop()
