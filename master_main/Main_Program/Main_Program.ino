@@ -32,6 +32,8 @@ void setup()
 
 void loop()
 {
+    // Serial.print("=MODE=");
+    // Serial.println(SWCheck());
     int sum_black = 5;
     const bool R1_black = analogRead(R1) < DR1;
     const bool R2_black = analogRead(R2) < DR2;
@@ -55,6 +57,7 @@ void loop()
 
     if (sum_black <= 2)
     {
+        flag = true;
         if (CT_black)
         {
             MoveStraight();
@@ -81,65 +84,69 @@ void loop()
                 }
             }
         }
-        flag = true;
     }
     else
     {
+
         Serial.print("==================================================================");
-        Serial.println(flag);
-        switch (location_info)
+        Serial.println(location_info);
+        if (flag)
         {
-        // start line
-        case 0:
-            Serial.print("StartLine passed");
-        // point A
-        case 1:
-            MoveStop(3000);
-            break;
-        //  point B
-        case 2:
-            //左右に揺れる
-            MoveSpinL();
-            delay(500);
-            MoveSpinR();
-            delay(1000);
-            MoveSpinL();
-            delay(1000);
-            MoveSpinR();
-            delay(1000);
-            // 黒になるまで旋回
-            while (analogRead(CT) > DCT)
+            switch (location_info)
             {
-                MoveL();
+            // start line
+            case 0:
+                Serial.print("StartLine passed");
+            // point A
+            case 1:
+                Serial.print("on A");
+                MoveStop(3000);
+                break;
+            //  point B
+            case 2:
+                //左右に揺れる
+                Serial.print("on B");
+                MoveSpinL();
+                delay(500);
+                MoveSpinR();
+                delay(1000);
+                MoveSpinL();
+                delay(1000);
+                MoveSpinR();
+                delay(1000);
+                // 黒になるまで旋回
+                while (analogRead(CT) > DCT)
+                {
+                    MoveL();
+                }
+                Serial.println("Line Ditected");
+                break;
+            // point C path
+            case 3:
+                MoveStop(500);
+                MoveL_UntillB();
+                break;
+            // point C
+            case 4:
+                MoveStraight();
+                delay(500);
+                MoveOnC();
+                break;
+            // point C path again
+            case 5:
+                MoveStop(500);
+                MoveL_UntillB();
+                break;
+            // point A again
+            case 6:
+                MoveStop(3000);
+                break;
+            default:
+                break;
             }
-            Serial.println("Line Ditected");
-            break;
-        // point C path
-        case 3:
-            MoveL_UntillB();
-            break;
-        // point C
-        case 4:
-            MoveStraight();
-            delay(500);
-            MoveL_UntillB();
-            break;
-        // point C path again
-        case 5:
-            MoveL_UntillB();
-            MoveL_UntillB();
-            break;
-        // point A again
-        case 6:
-            MoveStop(3000);
-            break;
-        default:
-            MoveStop(3000);
+            Serial.println("Flag Changed");
+            location_info += 1;
+            flag = false;
         }
-    }
-    if (flag)
-    {
-        location_info += 1;
-        flag = false;
     }
 }

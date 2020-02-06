@@ -2,7 +2,7 @@
 
 void MoveStop(int time)
 {
-  Serial.println("90 LEFT");
+  Serial.println("STOPPING");
   Move(0, 0);
   delay(time);
 }
@@ -51,6 +51,22 @@ void MoveStraight()
   Serial.println("Straight");
   Move(MSL, MSR);
 }
+// ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
+// C
+void MoveOnC()
+{
+  // 白になるまで旋回
+  while (analogRead(CT) < DCT)
+  {
+    MoveSpinL();
+  }
+  // 黒になるまで旋回
+  while (analogRead(CT) > DCT)
+  {
+    MoveSpinL();
+  }
+  Serial.println("Line Ditected");
+}
 
 void Move(int Lp, int Rp)
 {
@@ -79,7 +95,7 @@ void Move(int Lp, int Rp)
 int RemoteControl()
 {
   //Not ready yet
-  location_info++;
+  // location_info++;
 }
 
 int TimeAdjust()
