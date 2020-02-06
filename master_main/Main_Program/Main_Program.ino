@@ -101,82 +101,6 @@ void loop()
             }
         }
     }
-<<<<<<< HEAD
-    flag = true;
-  }
-  else {
-    Serial.print("==================================================================");
-    Serial.println(flag);
-    switch (location_info) {
-      // start line
-      case 0:
-      // point A
-      case 1:
-        MoveStop(5000);
-        break;
-      //  point B
-      case 2:
-        // すこし前進して一回転
-        /*MoveS();
-          delay(1500);
-          while (analogRead(CT) > DCT) {
-          MoveLS();
-          }
-          Move90L();
-          while (analogRead(CT) > DCT) {
-          MoveLS();
-          }
-          Move90L();*/
-        //左右に揺れる
-        MoveLS();
-        delay(500);
-        MoveRS();
-        delay(1000);
-        MoveLS();
-        delay(1000);
-        MoveRS();
-        delay(1000);
-        Move90L();
-        break;
-      // point C path
-      case 3:
-        while (analogRead(CT) > DCT) {
-          MoveL();
-          delay(500);
-        }
-        Move90L();
-        break;
-      // point C
-      case 4:
-        MoveS();
-        delay(500);
-        while (analogRead(CT) > DCT) {
-          MoveL();
-          delay(500);
-        }
-        Move90L();
-        break;
-      // point C path again
-      case 5:
-        Move90L();
-        while (analogRead(CT) > DCT) {
-          MoveL();
-          delay(500);
-        }
-        Move90L();
-        break;
-      // point A again
-      case 6:
-        MoveStop(5000);
-        TimeAdjust();
-        break;
-      default:
-        MoveStop(5000);
-    }
-    if (flag) {
-      location_info += 1;
-      flag = false;
-=======
     else
     {
 
@@ -240,6 +164,5 @@ void loop()
             location_info += 1;
             flag = false;
         }
->>>>>>> 890a12c4843f6aeb0894b9bbf5ba5f5d3806bdea
     }
 }
