@@ -43,6 +43,11 @@ void MoveL()
 {
   Serial.println("LEFT");
   Move(0, MSR);
+<<<<<<< HEAD
+=======
+  delayMicroseconds(10);
+  //Move(-MSL,MSR);
+>>>>>>> master
 }
 // ＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝＝
 // 前進
@@ -98,6 +103,7 @@ int RemoteControl()
   // location_info++;
 }
 
+<<<<<<< HEAD
 int TimeAdjust()
 {
   Serial.print("2");
@@ -106,6 +112,13 @@ int TimeAdjust()
     if (Serial2.read() == 1)
     {
       break;
+=======
+void TimeAdjust() {
+  Serial.print("2");
+  while (true) {
+    if (digitalRead(Trig) == HIGH) {
+      return;
+>>>>>>> master
     }
   }
 }
