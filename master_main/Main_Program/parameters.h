@@ -7,6 +7,9 @@ const int L1 = A3;
 const int L2 = A4;
 //↑photo sensors
 
+const int Trig = A5;
+//↑Timer Trigger
+
 const int LF = 10;
 const int LB = 11;
 const int RF = 12;
@@ -22,8 +25,8 @@ const int DL2 = 400;
 
 const int SMSL = 100;
 const int SMSR = 100;
-const int MSL = 100;
-const int MSR = 100;
+const int MSL = 200;
+const int MSR = 200;
 //↑motor speed
 
 const int ModeSW[8] {

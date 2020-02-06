@@ -22,8 +22,6 @@ void setup() {
   location_info = SWCheck();
   Serial.begin(9600);//PC (Debug)
   Serial1.begin(9600);//ESP (Wireless)
-  Serial2.begin(9600);//sub Arduino (Timer)
-  Serial2.write("1");
   Serial.print("=================================================================");
   Serial.println(location_info);
 }
@@ -86,15 +84,15 @@ void loop() {
       case 2:
         // すこし前進して一回転
         /*MoveS();
-        delay(1500);
-        while (analogRead(CT) > DCT) {
+          delay(1500);
+          while (analogRead(CT) > DCT) {
           MoveLS();
-        }
-        Move90L();
-        while (analogRead(CT) > DCT) {
+          }
+          Move90L();
+          while (analogRead(CT) > DCT) {
           MoveLS();
-        }
-        Move90L();*/
+          }
+          Move90L();*/
         //左右に揺れる
         MoveLS();
         delay(500);
@@ -136,6 +134,7 @@ void loop() {
       // point A again
       case 6:
         MoveStop(5000);
+        TimeAdjust();
         break;
       default:
         MoveStop(5000);

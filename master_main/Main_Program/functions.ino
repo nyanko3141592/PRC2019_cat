@@ -34,7 +34,7 @@ void MoveL() {
   Serial.println("LEFT");
   Move(0, MSR);
   delayMicroseconds(10);
-  //Move(-MSL,MSR);  
+  //Move(-MSL,MSR);
 }
 void MoveS() {
   Serial.println("Straight");
@@ -74,11 +74,11 @@ int RemoteControl() {
   location_info++;
 }
 
-int TimeAdjust() {
+void TimeAdjust() {
   Serial.print("2");
   while (true) {
-    if (Serial2.read() == 1) {
-      break;
+    if (digitalRead(Trig) == HIGH) {
+      return;
     }
   }
 }
