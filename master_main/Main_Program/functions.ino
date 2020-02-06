@@ -9,12 +9,12 @@ void MoveStop(int time)
 void MoveL_UntillB()
 {
   // 白になるまで旋回
-  while (analogRead(CT) < DCT)
+  while (analogRead(L2) < DL2)
   {
     MoveL();
   }
   // 黒になるまで旋回
-  while (analogRead(CT) > DCT)
+  while (analogRead(L2) > DL2)
   {
     MoveL();
   }

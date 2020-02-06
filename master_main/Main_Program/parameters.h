@@ -22,8 +22,8 @@ const int DL2 = 400;
 
 const int SMSL = 100;
 const int SMSR = 100;
-const int MSL = 100;
-const int MSR = 100;
+const int MSL = 200;
+const int MSR = 200;
 //↑motor speed
 
 const int ModeSW[8] {
