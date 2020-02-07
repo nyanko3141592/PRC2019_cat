@@ -1,29 +1,29 @@
 /*
- WiFi Web Server LED Blink
+  WiFi Web Server LED Blink
 
- A simple web server that lets you blink an LED via the web.
- This sketch will print the IP address of your WiFi Shield (once connected)
- to the Serial monitor. From there, you can open that address in a web browser
- to turn on and off the LED on pin 5.
+  A simple web server that lets you blink an LED via the web.
+  This sketch will print the IP address of your WiFi Shield (once connected)
+  to the Serial monitor. From there, you can open that address in a web browser
+  to turn on and off the LED on pin 5.
 
- If the IP address of your shield is yourAddress:
- http://yourAddress/H turns the LED on
- http://yourAddress/L turns it off
+  If the IP address of your shield is yourAddress:
+  http://yourAddress/H turns the LED on
+  http://yourAddress/L turns it off
 
- This example is written for a network using WPA encryption. For
- WEP or WPA, change the Wifi.begin() call accordingly.
+  This example is written for a network using WPA encryption. For
+  WEP or WPA, change the Wifi.begin() call accordingly.
 
- Circuit:
- * WiFi shield attached
- * LED attached to pin 5
+  Circuit:
+   WiFi shield attached
+   LED attached to pin 5
 
- created for arduino 25 Nov 2012
- by Tom Igoe
+  created for arduino 25 Nov 2012
+  by Tom Igoe
 
-ported for sparkfun esp32 
-31.01.2017 by Jan Hendrik Berlin
- 
- */
+  ported for sparkfun esp32
+  31.01.2017 by Jan Hendrik Berlin
+
+*/
 
 #include <WiFi.h>
 
@@ -32,40 +32,43 @@ const char* password = "TIso1410";
 
 WiFiServer server(80);
 
+HardwareSerial ESPSerial(2);
+
 void setup()
 {
-    Serial.begin(115200);
-    pinMode(5, OUTPUT);      // set the LED pin mode
+  Serial.begin(115200);
+  ESPSerial.begin(9600);
+  pinMode(5, OUTPUT);      // set the LED pin mode
 
-    delay(10);
+  delay(10);
 
-    // We start by connecting to a WiFi network
+  // We start by connecting to a WiFi network
 
-    Serial.println();
-    Serial.println();
-    Serial.print("Connecting to ");
-    Serial.println(ssid);
+  Serial.println();
+  Serial.println();
+  Serial.print("Connecting to ");
+  Serial.println(ssid);
 
-    WiFi.begin(ssid, password);
+  WiFi.begin(ssid, password);
 
-    while (WiFi.status() != WL_CONNECTED) {
-        delay(500);
-        Serial.print(".");
-    }
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
 
-    Serial.println("");
-    Serial.println("WiFi connected.");
-    Serial.println("IP address: ");
-    Serial.println(WiFi.localIP());
-    
-    server.begin();
+  Serial.println("");
+  Serial.println("WiFi connected.");
+  Serial.println("IP address: ");
+  Serial.println(WiFi.localIP());
+
+  server.begin();
 
 }
 
 int value = 0;
 
-void loop(){
- WiFiClient client = server.available();   // listen for incoming clients
+void loop() {
+  WiFiClient client = server.available();   // listen for incoming clients
 
   if (client) {                             // if you get a client,
     Serial.println("New Client.");           // print a message out the serial port
@@ -86,9 +89,14 @@ void loop(){
             client.println();
 
             // the content of the HTTP response follows the header:
-            client.print("     <a href=\"/H\">Forward</a><br>");
-            client.print("<a href=\"/H\">Left</a>     <a href=\"/H\">Right</a><br>");
-            client.print("     <a href=\"/L\">Backward</a><br>");
+            client.print("     <a href=\"/F\">Forward</a><br>");
+            client.print("<a href=\"/L\">Left</a>     <a href=\"/R\">Right</a><br>");
+            client.print("     <a href=\"/B\">Backward</a><br>");
+            client.print("<br>");
+            client.print("<a href=\"/S\">Stop</a><br>");
+            client.print("<br>");
+            client.print("<br>");
+            client.print("<a href=\"/E\">Return to autonomous</a><br>");
 
             // The HTTP response ends with another blank line:
             client.println();
@@ -102,11 +110,23 @@ void loop(){
         }
 
         // Check to see if the client request was "GET /H" or "GET /L":
-        if (currentLine.endsWith("GET /H")) {
-          digitalWrite(5, HIGH);               // GET /H turns the LED on
+        if (currentLine.endsWith("GET /F")) {
+          ESPSerial.print(1);               // Forward
         }
         if (currentLine.endsWith("GET /L")) {
-          digitalWrite(5, LOW);                // GET /L turns the LED off
+          ESPSerial.print(2);               // Left
+        }
+        if (currentLine.endsWith("GET /R")) {
+          ESPSerial.print(3);               // Right
+        }
+        if (currentLine.endsWith("GET /B")) {
+          ESPSerial.print(4);               // Backward
+        }
+        if (currentLine.endsWith("GET /S")) {
+          ESPSerial.print(5);               // Stop
+        }
+        if (currentLine.endsWith("GET /E")) {
+          ESPSerial.print(0);               // Exit
         }
       }
     }
