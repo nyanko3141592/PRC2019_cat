@@ -11,27 +11,13 @@
   mode 7: A→Goal
 */
 
-<<<<<<< HEAD
-void setup() {
-  pinMode(RF, OUTPUT);
-  pinMode(RB, OUTPUT);
-  pinMode(LF, OUTPUT);
-  pinMode(LB, OUTPUT);
-  for (i = 0; i < 8; i++) {
-    pinMode(ModeSW[i], INPUT_PULLUP);
-  }
-  location_info = SWCheck();
-  Serial.begin(9600);//PC (Debug)
-  Serial1.begin(9600);//ESP (Wireless)
-  Serial.print("=================================================================");
-  Serial.println(location_info);
-=======
 void setup()
 {
     pinMode(RF, OUTPUT);
     pinMode(RB, OUTPUT);
     pinMode(LF, OUTPUT);
     pinMode(LB, OUTPUT);
+    pinMode(Timer, INPUT);
     for (i = 0; i < 8; i++)
     {
         pinMode(ModeSW[i], INPUT_PULLUP);
@@ -39,11 +25,8 @@ void setup()
     location_info = SWCheck();
     Serial.begin(9600);  //PC (Debug)
     Serial1.begin(9600); //ESP (Wireless)
-    Serial2.begin(9600); //sub Arduino (Timer)
-    Serial2.write("1");
     Serial.print("=================================================================");
     Serial.println(location_info);
->>>>>>> 890a12c4843f6aeb0894b9bbf5ba5f5d3806bdea
 }
 
 void loop()
@@ -88,11 +71,13 @@ void loop()
             {
                 if (R1_black || R2_black)
                 {
-                    MoveSpinR();
+                    // MoveR();
+                    Move(250, -100);
                 }
                 else if (L1_black || L2_black)
                 {
-                    MoveSpinL();
+                    // MoveL();
+                    Move(-100, 250);
                 }
                 else
                 {
@@ -122,24 +107,29 @@ void loop()
             case 2:
                 //左右に揺れる
                 Serial.print("on B");
-                MoveSpinL();
+                MoveStop(100);
+                MoveSpinL2();
                 delay(500);
-                MoveSpinR();
+                MoveSpinR2();
                 delay(1000);
-                MoveSpinL();
-                delay(1000);
-                MoveSpinR();
-                delay(1000);
+                MoveStop(100);
+                // MoveSpinL();
+                // delay(1000);
+                // MoveSpinR();
+                // delay(1000);
+                // MoveStop(10);
                 // 黒になるまで旋回
                 while (analogRead(CT) > DCT)
                 {
-                    MoveL();
+                    MoveSpinL2();
                 }
                 Serial.println("Line Ditected");
                 break;
             // point C path
             case 3:
                 MoveStop(500);
+                MoveSpinL();
+                delay(200);
                 MoveL_UntillB();
                 break;
             // point C
@@ -150,12 +140,15 @@ void loop()
                 break;
             // point C path again
             case 5:
-                MoveStop(500);
+                MoveStop(100);
+                MoveSpinL();
+                delay(200);
                 MoveL_UntillB();
                 break;
             // point A again
             case 6:
-                MoveStop(3000);
+              MoveStop(3000);
+                TimeAdjust();
                 break;
             default:
                 break;

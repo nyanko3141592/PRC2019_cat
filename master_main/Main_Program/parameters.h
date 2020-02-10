@@ -6,9 +6,7 @@ const int CT = A2;
 const int L1 = A3;
 const int L2 = A4;
 //↑photo sensors
-
-const int Trig = A5;
-//↑Timer Trigger
+const int Timer = 53;
 
 const int LF = 10;
 const int LB = 11;
